@@ -113,8 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
     
-    // Observe elements for animation
-    const animateElements = document.querySelectorAll('.feature-card, .service-card, .testimonial-card');
+    // Observe elements for animation (excluindo cards do carrossel)
+    const animateElements = document.querySelectorAll('.feature-card, .testimonial-card');
     
     animateElements.forEach(element => {
         element.style.opacity = '0';
@@ -185,19 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
     
-    // Add hover effects to cards
-    const cards = document.querySelectorAll('.feature-card, .service-card, .testimonial-card');
-    
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-    
     // Parallax effect for hero section
     const hero = document.querySelector('.hero');
     
@@ -255,79 +242,71 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Add CSS for mobile menu
-const style = document.createElement('style');
-style.textContent = `
-    @media (max-width: 768px) {
-        .nav-menu {
-            position: fixed;
-            top: 70px;
-            left: -100%;
-            width: 100%;
-            height: calc(100vh - 70px);
-            background: white;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding-top: 50px;
-            transition: left 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .nav-menu.active {
-            left: 0;
-        }
-        
-        .nav-menu li {
-            margin: 20px 0;
-        }
-        
-        .nav-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        
-        .nav-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .nav-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-    }
-`;
-document.head.appendChild(style);
-
 // Carrossel de soluções automático e infinito (versão robusta)
 let originalCardsHTML = null;
 function setupInfiniteCarousel() {
     const track = document.getElementById('carousel-track');
     if (!track) return;
-    const container = track.parentElement;
+    
     // Salva o HTML original apenas se ainda não foi salvo e se há conteúdo
     if (!originalCardsHTML && track.children.length > 0) {
         originalCardsHTML = track.innerHTML;
     }
     if (!originalCardsHTML) return; // Garante que só roda se houver conteúdo
+    
     // Cria um elemento temporário para clonar os cards
     const temp = document.createElement('div');
     temp.innerHTML = originalCardsHTML;
+    
     // Filtra apenas elementos .service-card
     const cards = Array.from(temp.children).filter(el => el.classList && el.classList.contains('service-card'));
-    let totalWidth = 0;
-    let containerWidth = container.offsetWidth;
+    
+    // Limpa o track
     track.innerHTML = '';
-    // Adiciona cards até preencher 2x a largura do container
-    while (totalWidth < containerWidth * 2) {
-        cards.forEach(card => {
-            const clone = card.cloneNode(true);
-            track.appendChild(clone);
-            totalWidth += clone.offsetWidth || 320;
-        });
+    
+    // Adiciona os cards originais
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        track.appendChild(clone);
+    });
+    
+    // Adiciona uma cópia completa para garantir continuidade infinita
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        track.appendChild(clone);
+    });
+    
+    // Aplica dimensões baseadas no tamanho da tela
+    const width = window.innerWidth;
+    let cardHeight, cardWidth, cardMargin;
+    
+    if (width <= 425) {
+        cardHeight = '380px';
+        cardWidth = '260px';
+        cardMargin = '0 3px';
+    } else if (width <= 480) {
+        cardHeight = '400px';
+        cardWidth = '280px';
+        cardMargin = '0 5px';
+    } else if (width <= 768) {
+        cardHeight = '450px';
+        cardWidth = '280px';
+        cardMargin = '0 8px';
+    } else {
+        cardHeight = '500px';
+        cardWidth = '320px';
+        cardMargin = '0 10px';
     }
-    // Garante que todos os cards do carrossel estejam visíveis
+    
+    // Garante que todos os cards do carrossel estejam visíveis e com altura fixa
     track.querySelectorAll('.service-card').forEach(card => {
-      card.style.opacity = '1';
-      card.style.transform = 'translateY(0)';
+        card.style.opacity = '1';
+        card.style.height = cardHeight;
+        card.style.width = cardWidth;
+        card.style.flexShrink = '0';
+        card.style.margin = cardMargin;
+        card.style.transform = 'none';
+        card.style.transition = 'box-shadow 0.3s ease, transform 0.3s ease';
     });
 }
 
@@ -348,29 +327,62 @@ let originalTestimonialsHTML = null;
 function setupInfiniteTestimonialsCarousel() {
     const track = document.getElementById('carousel-testimonials');
     if (!track) return;
-    const container = track.parentElement;
+    
     if (!originalTestimonialsHTML && track.children.length > 0) {
         originalTestimonialsHTML = track.innerHTML;
     }
     if (!originalTestimonialsHTML) return;
+    
     const temp = document.createElement('div');
     temp.innerHTML = originalTestimonialsHTML;
+    
     // Filtra apenas elementos .testimonial-image
     const cards = Array.from(temp.children).filter(el => el.classList && el.classList.contains('testimonial-image'));
-    let totalWidth = 0;
-    let containerWidth = container.offsetWidth;
+    
+    // Limpa o track
     track.innerHTML = '';
-    while (totalWidth < containerWidth * 2) {
-        cards.forEach(card => {
-            const clone = card.cloneNode(true);
-            track.appendChild(clone);
-            totalWidth += clone.offsetWidth || 260;
-        });
+    
+    // Adiciona os cards originais
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        track.appendChild(clone);
+    });
+    
+    // Adiciona uma cópia completa para garantir continuidade infinita
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        track.appendChild(clone);
+    });
+    
+    // Aplica dimensões baseadas no tamanho da tela
+    const width = window.innerWidth;
+    let cardHeight, cardWidth, cardMargin;
+    
+    if (width <= 425) {
+        cardHeight = '280px';
+        cardWidth = '180px';
+        cardMargin = '0 15px';
+    } else if (width <= 480) {
+        cardHeight = '300px';
+        cardWidth = '200px';
+        cardMargin = '0 15px';
+    } else if (width <= 768) {
+        cardHeight = '350px';
+        cardWidth = '240px';
+        cardMargin = '0 15px';
+    } else {
+        cardHeight = '400px';
+        cardWidth = '280px';
+        cardMargin = '0 15px';
     }
-    // Garante que todos os prints estejam visíveis
+    
+    // Garante que todos os prints estejam visíveis e com dimensões fixas
     track.querySelectorAll('.testimonial-image').forEach(card => {
-      card.style.opacity = '1';
-      card.style.transform = 'translateY(0)';
+        card.style.opacity = '1';
+        card.style.width = cardWidth;
+        card.style.height = cardHeight;
+        card.style.flexShrink = '0';
+        card.style.margin = cardMargin;
     });
 }
 
