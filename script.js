@@ -366,6 +366,10 @@ function setupInfiniteTestimonialsCarousel() {
         cardHeight = '300px';
         cardWidth = '200px';
         cardMargin = '0 15px';
+    } else if (width <= 679) {
+        cardHeight = '350px';
+        cardWidth = '240px';
+        cardMargin = '0 15px';
     } else if (width <= 768) {
         cardHeight = '350px';
         cardWidth = '240px';
