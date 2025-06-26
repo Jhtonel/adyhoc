@@ -307,6 +307,35 @@ body {
 .services {
     padding: 80px 0;
     background: var(--soft-gray);
+    overflow: hidden;
+}
+
+.carousel-container {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 40px;
+    animation: scroll 40s linear infinite;
+    width: max-content;
+    align-items: center;
+}
+
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .services-grid {
@@ -317,16 +346,95 @@ body {
 
 .service-card {
     background: var(--white);
-    padding: 40px;
+    padding: 0;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(42, 67, 101, 0.08);
     transition: transform 0.3s ease, border 0.3s;
     border: 2px solid var(--soft-gray);
+    height: 420px;
+    perspective: 1000px;
+    min-width: 300px;
+    flex-shrink: 0;
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
     border-color: var(--gold);
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    border-radius: 20px;
+}
+
+.service-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-front {
+    background: var(--white);
+}
+
+.card-back {
+    background: var(--deep-blue);
+    color: var(--white);
+    transform: rotateY(180deg);
+    padding: 20px;
+}
+
+.card-back h3 {
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.card-back p {
+    color: var(--white);
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.card-back ul {
+    list-style: none;
+    text-align: left;
+    width: 100%;
+}
+
+.card-back li {
+    padding: 8px;
+    color: var(--white);
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.card-back li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: bold;
+}
+
+.card-back strong {
+    color: var(--gold);
 }
 
 .service-icon {
@@ -348,31 +456,11 @@ body {
 .service-card h3 {
     font-size: 1.4rem;
     margin-bottom: 15px;
-    color: var(--deep-blue);
 }
 
 .service-card p {
-    color: #3d4c63;
     margin-bottom: 20px;
-}
-
-.service-card ul {
-    list-style: none;
-}
-
-.service-card li {
-    padding: 8px 0;
-    color: #3d4c63;
-    position: relative;
-    padding-left: 25px;
-}
-
-.service-card li::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: var(--gold);
-    font-weight: bold;
+    line-height: 1.6;
 }
 
 /* Testimonials Section */
@@ -383,8 +471,10 @@ body {
 
 .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+    justify-items: center;
+    align-items: start;
 }
 
 .testimonial-card {
@@ -439,6 +529,16 @@ body {
 .author-info span {
     color: var(--gold);
     font-size: 0.9rem;
+}
+
+.testimonial-image img {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(42,67,101,0.10);
+    background: var(--white);
+    display: block;
+    object-fit: cover;
 }
 
 /* CTA Section */
@@ -675,6 +775,37 @@ body {
     .cta-content h2 {
         font-size: 2rem;
     }
+    
+    .carousel-track {
+        gap: 30px;
+        animation-duration: 25s;
+    }
+    
+    .service-card {
+        height: 350px;
+        min-width: 280px;
+    }
+    
+    .card-front, .card-back {
+        padding: 30px 20px;
+    }
+    
+    .service-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .card-back li {
+        font-size: 0.85rem;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .testimonial-image img {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -705,6 +836,29 @@ body {
     .logo-img {
         height: 36px;
         max-width: 120px;
+    }
+    
+    .carousel-track {
+        gap: 20px;
+        animation-duration: 20s;
+    }
+    
+    .service-card {
+        height: 320px;
+        min-width: 260px;
+    }
+    
+    .card-front, .card-back {
+        padding: 25px 15px;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .testimonial-image img {
+        max-width: 100%;
     }
 }
 

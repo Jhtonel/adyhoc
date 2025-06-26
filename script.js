@@ -295,4 +295,93 @@ style.textContent = `
         }
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(style);
+
+// Carrossel de soluções automático e infinito (versão robusta)
+let originalCardsHTML = null;
+function setupInfiniteCarousel() {
+    const track = document.getElementById('carousel-track');
+    if (!track) return;
+    const container = track.parentElement;
+    // Salva o HTML original apenas se ainda não foi salvo e se há conteúdo
+    if (!originalCardsHTML && track.children.length > 0) {
+        originalCardsHTML = track.innerHTML;
+    }
+    if (!originalCardsHTML) return; // Garante que só roda se houver conteúdo
+    // Cria um elemento temporário para clonar os cards
+    const temp = document.createElement('div');
+    temp.innerHTML = originalCardsHTML;
+    // Filtra apenas elementos .service-card
+    const cards = Array.from(temp.children).filter(el => el.classList && el.classList.contains('service-card'));
+    let totalWidth = 0;
+    let containerWidth = container.offsetWidth;
+    track.innerHTML = '';
+    // Adiciona cards até preencher 2x a largura do container
+    while (totalWidth < containerWidth * 2) {
+        cards.forEach(card => {
+            const clone = card.cloneNode(true);
+            track.appendChild(clone);
+            totalWidth += clone.offsetWidth || 320;
+        });
+    }
+    // Garante que todos os cards do carrossel estejam visíveis
+    track.querySelectorAll('.service-card').forEach(card => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    });
+}
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        setupInfiniteCarousel();
+    }, 200);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(setupInfiniteCarousel, 100); // Pequeno delay para garantir renderização
+});
+
+// Carrossel de depoimentos (prints WhatsApp) automático e infinito
+let originalTestimonialsHTML = null;
+function setupInfiniteTestimonialsCarousel() {
+    const track = document.getElementById('carousel-testimonials');
+    if (!track) return;
+    const container = track.parentElement;
+    if (!originalTestimonialsHTML && track.children.length > 0) {
+        originalTestimonialsHTML = track.innerHTML;
+    }
+    if (!originalTestimonialsHTML) return;
+    const temp = document.createElement('div');
+    temp.innerHTML = originalTestimonialsHTML;
+    // Filtra apenas elementos .testimonial-image
+    const cards = Array.from(temp.children).filter(el => el.classList && el.classList.contains('testimonial-image'));
+    let totalWidth = 0;
+    let containerWidth = container.offsetWidth;
+    track.innerHTML = '';
+    while (totalWidth < containerWidth * 2) {
+        cards.forEach(card => {
+            const clone = card.cloneNode(true);
+            track.appendChild(clone);
+            totalWidth += clone.offsetWidth || 260;
+        });
+    }
+    // Garante que todos os prints estejam visíveis
+    track.querySelectorAll('.testimonial-image').forEach(card => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    });
+}
+
+let resizeTestimonialsTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTestimonialsTimeout);
+    resizeTestimonialsTimeout = setTimeout(() => {
+        setupInfiniteTestimonialsCarousel();
+    }, 200);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(setupInfiniteTestimonialsCarousel, 200);
+}); 
