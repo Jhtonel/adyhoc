@@ -1,14 +1,16 @@
-/* === PALETA DE CORES ===
-   Amarelo Dourado: #FFD700 (CTAs, destaques)
-   Azul Profundo:    #2A4365 (Fundos, cabeçalhos)
-   Branco:           #FFFFFF (Fundos, texto)
-   Cinza Suave:      #F5F7FA (Fundos secundários)
+/* === PALETA DE CORES ATUALIZADA ===
+   Amarelo Dourado: #FFD700 (Exclusivo para CTAs)
+   Azul Profundo:   #2A4365 (Fundos, cabeçalhos, botões secundários)
+   Branco:          #FFFFFF (Fundos principais)
+   Cinza Médio:     #5F6B7A (Textos, ícones)
+   Cinza Claro:     #E2E8F0 (Divisores)
 */
 :root {
     --gold: #FFD700;
-    --deep-blue: #2A4365;
+    --blue: #2A4365;
     --white: #FFFFFF;
-    --soft-gray: #F5F7FA;
+    --gray-medium: #2D3748;
+    --gray-light: #E2E8F0;
 }
 
 /* Reset and Base Styles */
@@ -21,7 +23,7 @@
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
     background-color: var(--white);
     overflow-x: hidden;
 }
@@ -36,7 +38,7 @@ body {
 
 /* Gradient Text */
 .gradient-text {
-    background: linear-gradient(90deg, var(--gold) 0%, var(--deep-blue) 100%);
+    background: linear-gradient(90deg, var(--gold) 0%, var(--blue) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -45,7 +47,7 @@ body {
 /* Buttons */
 .btn-primary {
     background: var(--gold);
-    color: var(--deep-blue);
+    color: var(--gray-medium);
     border: none;
     padding: 12px 24px;
     border-radius: 8px;
@@ -54,20 +56,20 @@ body {
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
-    box-shadow: 0 4px 16px rgba(42, 67, 101, 0.08);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.08);
 }
 
 .btn-primary:hover {
     background: #ffe066;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
     transform: translateY(-2px) scale(1.03);
     box-shadow: 0 10px 25px rgba(255, 215, 0, 0.15);
 }
 
 .btn-secondary {
     background: transparent;
-    color: var(--deep-blue);
-    border: 2px solid var(--deep-blue);
+    color: var(--gray-medium);
+    border: 2px solid var(--gray-medium);
     padding: 12px 24px;
     border-radius: 8px;
     font-weight: 500;
@@ -78,7 +80,7 @@ body {
 }
 
 .btn-secondary:hover {
-    background: var(--deep-blue);
+    background: var(--gray-medium);
     color: var(--white);
     transform: translateY(-2px);
 }
@@ -93,49 +95,76 @@ body {
 }
 
 /* Header */
-.header {
+.header, .navbar, .nav-container {
+    background: #23408e;
+    height: 80px;
+    display: flex;
+    align-items: center;
     position: fixed;
     top: 0;
     width: 100%;
-    background: var(--deep-blue);
-    backdrop-filter: blur(10px);
     z-index: 1000;
-    border-bottom: 2px solid var(--gold);
+    box-shadow: none;
+    border: none;
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 70px;
-    width: 100%;
-    box-sizing: border-box;
 }
 
-.nav-logo h2 {
-    color: var(--gold);
-    font-weight: 900;
-    letter-spacing: 1px;
+.nav-logo {
+    margin-left: 40px;
+    margin-right: auto;
+}
+
+.nav-logo img {
+    height: 40px;
+    width: auto;
 }
 
 .nav-menu {
     display: flex;
+    gap: 32px;
+    align-items: flex-end;
     list-style: none;
-    gap: 30px;
+    margin-left: 0;
+    margin-right: 0;
 }
 
-.nav-menu a {
+.nav-menu li a {
+    color: #fff;
+    font-weight: 600;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 1rem;
     text-decoration: none;
-    color: var(--white);
-    font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.2s;
 }
 
-.nav-menu a:hover {
-    color: var(--gold);
+.nav-menu li a:hover {
+    color: #FFD700;
+}
+
+.nav-cta {
+    margin-left: 32px;
+    margin-right: 40px;
+}
+
+.btn-cta, .nav-cta button {
+    background: #f3f8ff;
+    color: #23408e;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-cta:hover, .nav-cta button:hover {
+    background: #e2e8f0;
+    color: #1a2a5c;
 }
 
 .nav-toggle {
@@ -189,6 +218,11 @@ body {
         font-size: 2.5rem;
     }
     
+    .hero-credibility {
+        justify-content: center;
+        gap: 20px;
+    }
+    
     .hero-buttons {
         justify-content: center;
     }
@@ -232,7 +266,7 @@ body {
     }
     
     .services {
-        padding: 80px 0;
+        padding: 60px 0 120px 0;
     }
     
     .testimonials {
@@ -242,7 +276,7 @@ body {
     .carousel-container {
         margin: 30px auto;
         height: 480px;
-        width: 95%;
+        width: 100%;
     }
     
     .carousel-track {
@@ -252,7 +286,7 @@ body {
     
     .testimonials .carousel-container {
         margin: 30px auto;
-        width: 95%;
+        width: 100%;
     }
     
     #carousel-testimonials {
@@ -260,13 +294,14 @@ body {
     }
     
     .service-card {
-        height: 450px !important;
+        height: 520px !important;
+        min-height: 520px !important;
         width: 280px !important;
         margin: 0 8px !important;
     }
     
     .card-front, .card-back {
-        padding: 10px;
+        padding: 5px;
         justify-content: center !important;
     }
     
@@ -308,6 +343,13 @@ body {
         border-radius: 14px;
         object-fit: contain;
     }
+    
+    .hero {
+        padding-bottom: 10px;
+    }
+    .features {
+        padding-top: 10px;
+    }
 }
 
 /* Breakpoint específico para telas entre 679px e 768px */
@@ -329,40 +371,49 @@ body {
 }
 
 @media (max-width: 480px) {
+    .hero {
+        margin-top: 56px !important;
+        padding-bottom: 0 !important;
+        min-height: 0 !important;
+    }
+    .features {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    .section-header {
+        margin: 0 !important;
+    }
     .hero-container {
-        display: block !important;
-        grid-template-columns: 1fr !important;
-        text-align: center;
-        gap: 0 !important;
-        padding: 0 15px;
+        padding: 0 10px;
+        gap: 30px;
     }
     
     .hero-content {
-        display: block !important;
-        width: 100% !important;
-        margin-bottom: 30px !important;
-        order: unset !important;
+        text-align: center;
     }
     
     .hero-image {
-        display: block !important;
-        width: 100% !important;
-        margin-top: 0 !important;
-        order: unset !important;
+        margin-top: 20px;
     }
     
     .hero-title {
         font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .hero-credibility {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
     }
     
     .hero-buttons {
-        justify-content: center;
+        flex-direction: column;
+        gap: 15px;
     }
     
     .hero-card {
-        max-width: 100%;
-        padding: 30px 20px;
-        margin: 0 auto;
+        padding: 25px 15px;
     }
     
     .contact-content {
@@ -409,7 +460,8 @@ body {
     }
     
     .services {
-        padding: 60px 0;
+        padding: 40px 0 240px 0;
+        min-height: unset !important;
     }
     
     .testimonials {
@@ -417,29 +469,13 @@ body {
     }
     
     .carousel-container {
-        margin: 20px auto;
-        height: 420px;
-        width: 98%;
-    }
-    
-    .carousel-track {
-        min-height: 420px;
-        animation-duration: 18s;
-    }
-    
-    .testimonials .carousel-container {
-        margin: 20px auto;
-        width: 98%;
-    }
-    
-    #carousel-testimonials {
-        animation-duration: 15s;
+        height: auto !important;
+        min-height: unset !important;
     }
     
     .service-card {
-        height: 420px !important;
-        width: 260px !important;
-        margin: 0 6px !important;
+        min-height: 600px !important;
+        height: auto !important;
     }
     
     .card-front, .card-back {
@@ -566,7 +602,7 @@ body {
     .carousel-container {
         margin: 20px auto;
         height: 400px;
-        width: 98%;
+        width: 100%;
     }
     
     .carousel-track {
@@ -656,14 +692,30 @@ body {
 
 /* Hero Section */
 .hero {
-    padding: 120px 0 80px;
-    background: linear-gradient(135deg, var(--soft-gray) 0%, var(--white) 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+    margin-top: 100px;
+    padding-bottom: 30px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%233B82F6" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .hero-container {
+    position: relative;
+    z-index: 2;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
@@ -678,14 +730,40 @@ body {
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 20px;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .hero-subtitle {
     font-size: 1.2rem;
-    color: #3d4c63;
-    margin-bottom: 30px;
     line-height: 1.6;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.hero-credibility {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.credibility-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    color: var(--gray-medium);
+    font-weight: 500;
+}
+
+.credibility-item i {
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+.credibility-item strong {
+    color: var(--gray-medium);
+    font-weight: 700;
 }
 
 .hero-buttons {
@@ -723,13 +801,13 @@ body {
 
 .card-icon i {
     font-size: 2rem;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .hero-card h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .hero-card p {
@@ -746,7 +824,7 @@ body {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 20px;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .section-header p {
@@ -758,6 +836,7 @@ body {
 
 /* Features Section */
 .features {
+    padding-top: 30px;
     padding: 80px 0;
     background: var(--white);
 }
@@ -773,8 +852,8 @@ body {
     padding: 40px 20px;
     border-radius: 15px;
     transition: transform 0.3s ease;
-    border: 2px solid var(--soft-gray);
-    background: var(--soft-gray);
+    border: 2px solid var(--gray-light);
+    background: var(--gray-light);
 }
 
 .feature-card:hover {
@@ -796,13 +875,13 @@ body {
 
 .feature-icon i {
     font-size: 1.5rem;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .feature-card h3 {
     font-size: 1.3rem;
     margin-bottom: 15px;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .feature-card p {
@@ -813,17 +892,15 @@ body {
 /* Services Section */
 .services {
     padding: 120px 0;
-    background: var(--soft-gray);
+    background: var(--gray-light);
     overflow: hidden;
     min-height: 500px !important;
 }
 
 .carousel-container {
-    height: 550px;
-    overflow: hidden;
-    width: 80%;
-    margin: 40px auto;
-    position: relative;
+    width: 100% !important;
+    max-width: 100%;
+    margin: 30px 0;
 }
 
 .carousel-track {
@@ -961,7 +1038,7 @@ body {
 }
 
 .card-back {
-    background: var(--deep-blue);
+    background: var(--blue);
     color: var(--white);
     transform: rotateY(180deg);
     z-index: 1;
@@ -983,13 +1060,10 @@ body {
 }
 
 .card-back ul {
+    max-height: none !important;
+    overflow: visible !important;
     list-style: none;
-    text-align: left;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    max-height: 200px;
-    overflow-y: auto;
+    padding-left: 0;
 }
 
 .card-back li {
@@ -1029,7 +1103,7 @@ body {
 
 .service-icon i {
     font-size: 1.5rem;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .service-card h3 {
@@ -1066,7 +1140,7 @@ body {
 }
 
 .testimonial-card {
-    background: var(--soft-gray);
+    background: var(--gray-light);
     padding: 30px;
     border-radius: 15px;
     border-left: 4px solid var(--gold);
@@ -1105,12 +1179,12 @@ body {
 }
 
 .author-avatar i {
-    color: var(--deep-blue);
+    color: var(--gray-medium);
     font-size: 1.2rem;
 }
 
 .author-info h4 {
-    color: var(--deep-blue);
+    color: var(--gray-medium);
     margin-bottom: 5px;
 }
 
@@ -1133,40 +1207,40 @@ body {
 /* CTA Section */
 .cta {
     padding: 80px 0;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--deep-blue) 100%);
-    color: var(--deep-blue);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--blue) 100%);
+    color: var(--gray-medium);
     text-align: center;
 }
 
 .cta-content h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: var(--deep-blue);
+    color: var(--white);
 }
 
 .cta-content p {
     font-size: 1.1rem;
     margin-bottom: 30px;
     opacity: 0.9;
-    color: var(--deep-blue);
+    color: var(--white);
 }
 
 .cta .btn-primary {
-    background: var(--deep-blue);
+    background: var(--gray-medium);
     color: var(--gold);
     font-weight: 700;
 }
 
 .cta .btn-primary:hover {
     background: var(--white);
-    color: var(--deep-blue);
-    box-shadow: 0 10px 25px rgba(42, 67, 101, 0.10);
+    color: var(--gray-medium);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.10);
 }
 
 /* Contact Section */
 .contact {
     padding: 80px 0;
-    background: var(--soft-gray);
+    background: var(--gray-light);
 }
 
 .contact-content {
@@ -1179,7 +1253,7 @@ body {
 .contact-info h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .contact-info p {
@@ -1207,12 +1281,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--deep-blue);
+    color: var(--gray-medium);
     font-size: 1.2rem;
 }
 
 .contact-item h4 {
-    color: var(--deep-blue);
+    color: var(--gray-medium);
     margin-bottom: 5px;
 }
 
@@ -1237,12 +1311,12 @@ body {
 .form-group textarea {
     width: 100%;
     padding: 15px;
-    border: 2px solid var(--soft-gray);
+    border: 2px solid var(--gray-light);
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease;
-    color: var(--deep-blue);
-    background: var(--soft-gray);
+    color: var(--gray-medium);
+    background: var(--gray-light);
 }
 
 .form-group input:focus,
@@ -1259,7 +1333,7 @@ body {
 
 /* Footer */
 .footer {
-    background: var(--deep-blue);
+    background: var(--blue);
     color: var(--white);
     padding: 60px 0 20px;
 }
@@ -1320,7 +1394,7 @@ body {
 
 .social-links a:hover {
     background: var(--gold);
-    color: var(--deep-blue);
+    color: var(--gray-medium);
 }
 
 .footer-bottom {
