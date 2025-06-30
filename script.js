@@ -76,19 +76,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // CTA button functionality
-    const ctaButtons = document.querySelectorAll('.btn-primary');
+    const ctaButtons = document.querySelectorAll('.btn-primary, .nav-cta button');
     
     ctaButtons.forEach(button => {
         button.addEventListener('click', function(e) {
-            if (this.textContent.includes('Orçamento') || this.textContent.includes('Ajuda')) {
+            if (
+                this.textContent.includes('Orçamento') ||
+                this.textContent.includes('Ajuda') ||
+                this.textContent.includes('Aprovação') ||
+                this.textContent.includes('aprovado')
+            ) {
                 e.preventDefault();
-                
                 // Scroll to contact form
                 const contactSection = document.querySelector('#contato');
                 if (contactSection) {
                     const headerHeight = document.querySelector('.header').offsetHeight;
                     const targetPosition = contactSection.offsetTop - headerHeight;
-                    
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'

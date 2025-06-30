@@ -7,7 +7,7 @@
 */
 :root {
     --gold: #FFD700;
-    --blue: #2A4365;
+    --blue: rgb(35, 64, 142);
     --white: #FFFFFF;
     --gray-medium: #2D3748;
     --gray-light: #E2E8F0;
