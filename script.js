@@ -403,4 +403,14 @@ window.addEventListener('resize', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(setupInfiniteTestimonialsCarousel, 200);
-}); 
+});
+
+function openLeadsterChat() {
+  const avatar = document.querySelector('.nld-avatar');
+  if (avatar) avatar.click();
+}
+
+const whatsappBtn = document.getElementById('whatsapp-btn');
+if (whatsappBtn) {
+  whatsappBtn.addEventListener('click', openLeadsterChat);
+} 
